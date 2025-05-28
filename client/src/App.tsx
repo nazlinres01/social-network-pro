@@ -9,6 +9,9 @@ import ProfilePage from "@/pages/profile";
 import MessagesPage from "@/pages/messages";
 import ExplorePage from "@/pages/explore";
 import NotificationsPage from "@/pages/notifications";
+import GroupsPage from "@/pages/groups";
+import SavedPage from "@/pages/saved";
+import SettingsPage from "@/pages/settings";
 
 function Router() {
   return (
@@ -18,6 +21,9 @@ function Router() {
       <Route path="/messages" component={MessagesPage} />
       <Route path="/explore" component={ExplorePage} />
       <Route path="/notifications" component={NotificationsPage} />
+      <Route path="/groups" component={GroupsPage} />
+      <Route path="/saved" component={SavedPage} />
+      <Route path="/settings" component={SettingsPage} />
       <Route component={NotFound} />
     </Switch>
   );

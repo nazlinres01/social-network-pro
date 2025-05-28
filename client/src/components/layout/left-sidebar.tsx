@@ -1,14 +1,25 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
+import { useLocation } from "wouter";
 import { api } from "@/lib/api";
 import { Home, User, Bookmark, Users, Settings } from "lucide-react";
 
 export function LeftSidebar() {
+  const [location, setLocation] = useLocation();
+  
   const { data: currentUser } = useQuery({
     queryKey: ["/api/auth/me"],
     queryFn: api.getCurrentUser,
   });
+
+  const menuItems = [
+    { path: "/", icon: Home, label: "Ana Sayfa" },
+    { path: "/profile", icon: User, label: "Profilim" },
+    { path: "/saved", icon: Bookmark, label: "Kaydedilenler" },
+    { path: "/groups", icon: Users, label: "Gruplar" },
+    { path: "/settings", icon: Settings, label: "Ayarlar" }
+  ];
 
   const trendingTopics = [
     { tag: "#WebTasarım", posts: "1.2K" },
