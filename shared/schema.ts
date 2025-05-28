@@ -185,7 +185,7 @@ export const likesRelations = relations(likes, ({ one }) => ({
 
 export const commentsRelations = relations(comments, ({ one }) => ({
   author: one(users, {
-    fields: [comments.authorId],
+    fields: [comments.userId],
     references: [users.id],
   }),
   post: one(posts, {
