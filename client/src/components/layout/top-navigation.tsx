@@ -3,6 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { api } from "@/lib/api";
+import { useLocation } from "wouter";
 import { Search, Home, Compass, Heart, Mail } from "lucide-react";
 
 export function TopNavigation() {

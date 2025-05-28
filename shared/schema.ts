@@ -48,6 +48,23 @@ export const follows = pgTable("follows", {
   createdAt: timestamp("created_at").defaultNow(),
 });
 
+export const conversations = pgTable("conversations", {
+  id: serial("id").primaryKey(),
+  user1Id: integer("user1_id").references(() => users.id).notNull(),
+  user2Id: integer("user2_id").references(() => users.id).notNull(),
+  lastMessageAt: timestamp("last_message_at").defaultNow(),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const messages = pgTable("messages", {
+  id: serial("id").primaryKey(),
+  conversationId: integer("conversation_id").references(() => conversations.id).notNull(),
+  senderId: integer("sender_id").references(() => users.id).notNull(),
+  content: text("content").notNull(),
+  isRead: boolean("is_read").default(false),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
 // Insert schemas
 export const insertUserSchema = createInsertSchema(users).omit({
   id: true,
@@ -80,18 +97,33 @@ export const insertFollowSchema = createInsertSchema(follows).omit({
   createdAt: true,
 });
 
+export const insertConversationSchema = createInsertSchema(conversations).omit({
+  id: true,
+  lastMessageAt: true,
+  createdAt: true,
+});
+
+export const insertMessageSchema = createInsertSchema(messages).omit({
+  id: true,
+  createdAt: true,
+});
+
 // Types
 export type User = typeof users.$inferSelect;
 export type Post = typeof posts.$inferSelect;
 export type Like = typeof likes.$inferSelect;
 export type Comment = typeof comments.$inferSelect;
 export type Follow = typeof follows.$inferSelect;
+export type Conversation = typeof conversations.$inferSelect;
+export type Message = typeof messages.$inferSelect;
 
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type InsertPost = z.infer<typeof insertPostSchema>;
 export type InsertLike = z.infer<typeof insertLikeSchema>;
 export type InsertComment = z.infer<typeof insertCommentSchema>;
 export type InsertFollow = z.infer<typeof insertFollowSchema>;
+export type InsertConversation = z.infer<typeof insertConversationSchema>;
+export type InsertMessage = z.infer<typeof insertMessageSchema>;
 
 // Extended types for API responses
 export type PostWithAuthor = Post & {
@@ -105,4 +137,15 @@ export type CommentWithAuthor = Comment & {
 
 export type PostWithDetails = PostWithAuthor & {
   comments: CommentWithAuthor[];
+};
+
+export type ConversationWithParticipants = Conversation & {
+  user1: User;
+  user2: User;
+  lastMessage?: Message;
+  unreadCount?: number;
+};
+
+export type MessageWithSender = Message & {
+  sender: User;
 };
