@@ -14,7 +14,7 @@ function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
-      <Route path="/profile/:userId?" component={ProfilePage} />
+      <Route path="/profile/:userId?" component={({ params }) => <ProfilePage userId={params.userId} />} />
       <Route path="/messages" component={MessagesPage} />
       <Route path="/explore" component={ExplorePage} />
       <Route path="/notifications" component={NotificationsPage} />
