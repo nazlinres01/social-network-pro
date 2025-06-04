@@ -2,6 +2,10 @@
 
 A modern and user-friendly social media platform built with React, Express, and PostgreSQL.
 
+
+![Resim15](https://github.com/user-attachments/assets/6ac24587-eab8-427e-beba-ea63c0e90d08)
+
+
 ## Features
 
 - **Content Sharing**: Text and image posts with comments and likes
